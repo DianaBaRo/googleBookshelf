@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import BookListContainer from './containers/BookListContainer';
+import SearchableBookListContainer from './containers/SearchableBookListContainer';
+import LatestBookListContainer from './containers/LatestBookListContainer';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -13,7 +14,8 @@ const store = createStore(booksReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
     <Provider store={store} >
-        <BookListContainer />
+        <SearchableBookListContainer />
+        <LatestBookListContainer />
     </Provider>, document.getElementById('root')
 );
 
