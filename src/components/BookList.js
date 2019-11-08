@@ -1,14 +1,12 @@
 import React from 'react';
+import Book from './Book';
 
-const BookList = props => {
-    return (
-        <div>
-            <ul>
-                {props.books.map( book => <li>{book.selfLink}</li>)}
-            </ul>
-        </div>
-        
-    )
-}
+const BookList = ({ books }) => (
+    <div className="book-list">
+    { books.map(book => <Book title={book.volumeInfo.title} img_url={book.volumeInfo.imageLinks.thumbnail} />) }
+  </div>
+
+)
+
 
 export default BookList;
