@@ -1,30 +1,61 @@
-import React from 'react';
-import SearchForm from '../components/SearchForm';
+import React, { PureComponent } from 'react';
+import '../BookListContainer.css';
 import BookList from '../components/BookList';
+//import { fetchBooks } from '../actions/bookList';
+import  Button  from '../components/Button';
 
-class BookListContainer extends React.Component {
+//import { connect } from 'react-redux';
+
+class BookListContainer extends PureComponent {
+
     state = {
+        query: '',
         books: []
-    }
+    };
 
-    fetchBooks = (query) => {
-        fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`)
-        .then(response => response.json())
-        .then(data => {
-            this.setState({
-                books: data.items
+    handleChange = event =>
+        this.setState({ query: event.target.value });
+
+    handleSubmit = event => {
+        event.preventDefault();
+        
+        fetch(`https://www.googleapis.com/books/v1/volumes?q=${this.state.query}`)
+        .then(response => {
+            if ( !response.ok ) { throw response }
+            return response.json()  //we only get here if there is no error
+        })
+        .then(books => {
+            console.log(books.items)
+            if (books.error) {
+                alert("There was an error")
+            } else {
+                this.setState({
+                    books: books.items
+                })
+            }
+        })
+        .catch( err => {
+            err.text().then(errorMessage => {
+                alert(JSON.parse(errorMessage).error.message)
             })
         })
+    
     };
 
     render () {
-        return(
-            <div>
-                <SearchForm fetchBooks={this.fetchBooks} />
+        return (
+            <div className="BookListContainer">
+                <form className='searchForm'>
+                    <label><h1>Search for Book</h1></label>
+                    <input id='query' type='text' name='query' onChange={this.handleChange} value={this.state.query}/>
+                </form>
+
+                { Button(this.handleSubmit, "Search") }
+                {typeof this.state.books === 'object' && this.state.books.length > 0 && <h2>Books By Search:</h2>}
                 <BookList books={this.state.books} />
             </div>
-        )
-    }
+        );
+    };
 
 };
 
