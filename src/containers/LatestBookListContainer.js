@@ -5,7 +5,7 @@ import BookList from '../components/BookList';
 
 //import { connect } from 'react-redux';
 
-class SearchableBookListContainer extends PureComponent {
+class LatestBookListContainer extends PureComponent {
 
     state = {
         books: []
@@ -45,4 +45,4 @@ class SearchableBookListContainer extends PureComponent {
 
 };
 
-export default SearchableBookListContainer;
+export default LatestBookListContainer;
