@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SearchableBookListContainer from './containers/SearchableBookListContainer';
-import LatestBookListContainer from './containers/LatestBookListContainer';
+import App from './containers/App';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -13,10 +12,8 @@ import * as serviceWorker from './serviceWorker';
 //const store = createStore(booksReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
-        <>
-            <SearchableBookListContainer />
-            <LatestBookListContainer />
-        </>, document.getElementById('root')
+    <App />, 
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
