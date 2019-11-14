@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
-import BookList from '../components/BookList';
+import { Link } from 'react-router-dom';
+
 //import { fetchBooks } from '../actions/bookList';
 //import  Button  from '../components/Button';
 
@@ -42,7 +43,19 @@ class SearchableBookListContainer extends PureComponent {
     
     };
 
+    
     render () {
+
+        const renderBooks = this.state.books.map(book => (
+            <p>
+                <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                <Link to={{
+                    pathname: `/search/books/${book.volumeInfo.title}`,
+                    state: book
+                }} ><h3>{ book.volumeInfo.title }</h3></Link>
+            </p>
+        ));    
+
         return (
             <div className="BookListContainer">
                 <form className='searchForm' onSubmit={this.handleSubmit}>
@@ -60,7 +73,8 @@ class SearchableBookListContainer extends PureComponent {
 
                 {/* { Button(this.handleButton, "Search") } */}
                 {typeof this.state.books === 'object' && this.state.books.length > 0 && <h2>Books By Search:</h2>}
-                <BookList books={this.state.books} />
+                
+                {renderBooks}
             </div>
         );
     };

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
-import BookList from '../components/BookList';
+import Book from '../components/Book';
+import { Route, Link } from 'react-router-dom';
 //import { fetchBooks } from '../actions/bookList';
 
 //import { connect } from 'react-redux';
@@ -36,9 +37,21 @@ class LatestBookListContainer extends PureComponent {
     };
 
     render () {
+
+        const renderBooks = this.state.books.map(book => (
+            <p>
+                <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                <Link to={{
+                    pathname: `/new-releases/books/${book.volumeInfo.title}`,
+                    state: book
+                }} ><h3>{ book.volumeInfo.title }</h3></Link>
+                
+            </p> 
+        ));
+
         return (
             <div className="BookListContainer">
-                <BookList books={this.state.books} />
+                {renderBooks}
             </div>
         );
     };
