@@ -12,6 +12,7 @@ const Book = (props) => {
 
         return(
             <div className="BookListContainer">
+                <h1>Book info</h1>
                 <h1>{ bookTitle }</h1>
                 <img src={bookImage} alt={bookTitle} />
                 <p>by { bookAuthor }</p>
@@ -21,6 +22,7 @@ const Book = (props) => {
         )
     } else {
         return <h1>URL not valid</h1>
+
     }
 };
 
