@@ -1,10 +1,6 @@
 import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
-import Book from '../components/Book';
-import { Route, Link } from 'react-router-dom';
-//import { fetchBooks } from '../actions/bookList';
-
-//import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class LatestBookListContainer extends PureComponent {
 
