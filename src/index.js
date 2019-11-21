@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Routes from './components/Routes';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -15,7 +15,7 @@ ReactDOM.render(
     //We pass our store as a prop to Provider and wrap our App component so all our components will have access to our Redux store and/or dispatch actions via the connect function.
     //Provider tells to our Redux app when there has been a change in state and has to re renders via the connect function. We have to specify which changes to the store's state should prompt a re-render of the application.
     <Provider store={store}>
-        <Routes />
+        <App />
     </Provider>, 
     document.getElementById('root')
 );

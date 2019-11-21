@@ -9,7 +9,7 @@ import Book from './Book';
 import WishListContainer from '../containers/WishListContainer';
 import CreateBook from '../containers/CreateBook';
 
-const Routes = () => {
+const App = () => {
     return (
         <Router>
             <>
@@ -29,4 +29,4 @@ const Routes = () => {
     );
 };
 
-export default Routes;
+export default App;
