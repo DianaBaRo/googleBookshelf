@@ -1,0 +1,78 @@
+import React, { PureComponent } from 'react';
+import '../css/Form.css';
+import { connect } from 'react-redux';
+import { addBook } from '../actions/books';
+
+class CreateBook extends PureComponent {
+
+    state = {
+        title: '',
+        author: '',
+        image: '',
+        moreInfo: ''
+    };
+
+    //instead of writing handleChange() as a class method, I declare it as a class property and assign an arrow function to it.
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
+    handleSubmit = event => {
+        event.preventDefault();
+        //update the Redux store's state when the user hits the submit button
+        this.props.addBook(this.state);
+        this.setState({
+            title: '',
+            author: '',
+            image: '',
+            moreInfo: ''
+        })
+    }
+
+    renderBooks = () => this.props.books.map((book) => <li id={book.id}>{book.title}</li>)
+    
+    render () {
+        
+        return (
+            
+            <div className='Form'> 
+                <h1>Create a book to add to your wishlist</h1>
+                <form onSubmit={ this.handleSubmit }>
+                    <p>
+                        <label>Title</label>
+                        <input type='text' name='title' onChange={ this.handleChange } value={this.state.title} />
+                    </p>
+                    <p>
+                        <label>Author</label>
+                        <input type='text' name='author' onChange={ this.handleChange } value={this.state.author} />
+                    </p>
+                    <p>
+                        <label>Upload an image</label>
+                        <input type='text' name='image' onChange={ this.handleChange } value={this.state.image} />
+                    </p>
+                    <p>
+                        <label>More Info</label>
+                        <textarea type='text' name='moreInfo' onChange={ this.handleChange } value={this.state.moreInfo} />
+                    </p>
+                    <input type='submit' value='Add to wishlist'/>
+                </form>
+
+                {this.renderBooks()}
+            </div>
+        );
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return { addBook: book => dispatch(addBook(book)) }
+};
+
+const mapStateToProps = state => {
+    return {
+        books: state.books
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateBook);
