@@ -1,7 +1,6 @@
 import React from 'react';
 
 const WishList = props => {
-    console.log(props)
     return (
         <div>
             <span>
@@ -11,8 +10,7 @@ const WishList = props => {
                 <p>{props.book.image}</p>
                 <p>{props.book.moreInfo}</p>
             </span>
-            <button onClick={ () => props.delete(props.book.id)}>X</button>
-
+            <button onClick={ () => props.deleteBook(props.book.id)}>X</button>
         </div>
     );
 };
