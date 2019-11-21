@@ -2,11 +2,6 @@ import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
 import { Link } from 'react-router-dom';
 
-//import { fetchBooks } from '../actions/bookList';
-//import  Button  from '../components/Button';
-
-//import { connect } from 'react-redux';
-
 class SearchableBookListContainer extends PureComponent {
 
     state = {
@@ -42,7 +37,6 @@ class SearchableBookListContainer extends PureComponent {
         })
     
     };
-
     
     render () {
 
