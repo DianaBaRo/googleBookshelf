@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
 import { connect } from 'react-redux';
 import WishList from '../components/WishList';
-import { deleteBook } from '../actions/books';
+import { deleteBook } from '../actions/wishList';
 
 class WishListContainer extends PureComponent {
     renderBooks = () => {
@@ -21,7 +21,7 @@ class WishListContainer extends PureComponent {
 
 const mapStateToProps = state => {
     return {
-        books: state.books
+        books: state.wishList
     };
 };
 

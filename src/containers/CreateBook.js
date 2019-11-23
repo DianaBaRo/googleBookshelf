@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import '../css/Form.css';
 import { connect } from 'react-redux';
-import { addBook } from '../actions/books';
+import { addBook } from '../actions/wishList';
 
 class CreateBook extends PureComponent {
 
@@ -71,7 +71,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
     return {
-        books: state.books
+        books: state.wishList
     }
 };
 
