@@ -3,31 +3,35 @@ import '../css/BookListContainer.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchLatestBookList } from '../actions/latestBookList';
+import { addBook } from '../actions/wishList';
 
 class LatestBookListContainer extends PureComponent {
 
+    handleAddBook = (book) => {
+        this.props.addBook(book);
+    };
+
     componentDidMount() {
-        console.log(this.props);
         this.props.fetchLatestBookList();
     };
 
     handleLoading = () => {
-        console.log(this.props.books);
-        if (this.props.loading) {
-            return <div>Loading...</div>
-        } else {
-            const renderBooks = this.props.books.map(book => (
+        const renderBooks = this.props.books.map(book => (
+            <span>
                 <p>
                     <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                     <Link to={{
                         pathname: `/new-releases/books/${book.volumeInfo.title}`,
                         state: book
                     }} ><h3>{ book.volumeInfo.title }</h3></Link>
-                    
-                </p> 
-            ));
-            return renderBooks
-        };
+                
+                </p>
+                
+                <button onClick={ () => this.handleAddBook({ author: book.volumeInfo.authors.concat(' '), title: book.volumeInfo.title , image: book.volumeInfo.imageLinks.thumbnail, moreInfo: book.volumeInfo.infoLink }) }>Add Book to Wishlist</button>
+            </span>  
+        ));
+
+        return renderBooks;
     };
 
     render () {
@@ -39,12 +43,17 @@ class LatestBookListContainer extends PureComponent {
     };
 };
 
-function mapDispatchToProps(dispatch) {
-    return { fetchLatestBookList: () => dispatch(fetchLatestBookList()) }
+const mapDispatchToProps = dispatch => {
+    return { 
+        fetchLatestBookList: () => dispatch(fetchLatestBookList()),
+        addBook: book => dispatch(addBook(book))
+    }
 };
 
 function mapStateToProps(state) {
-    return{ books: state.latestBookList }
+    return { 
+        books: state.latestBookList
+    }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps) (LatestBookListContainer);

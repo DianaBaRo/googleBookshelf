@@ -3,6 +3,7 @@ import '../css/BookListContainer.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchSearchBookList } from '../actions/searchBookList';
+import { addBook } from '../actions/wishList';
 
 class SearchableBookListContainer extends PureComponent {
 
@@ -18,27 +19,29 @@ class SearchableBookListContainer extends PureComponent {
         this.props.fetchSearchBookList(this.state.query);
     };
 
+    handleAddBook = (book) => {
+        this.props.addBook(book);
+    };
+
     handleLoading = () => {
-        console.log(this.props.books);
-        if (this.props.loading) {
-            return <div>Loading...</div>
-        } else {
-            const renderBooks = this.props.books.map(book => (
+        const renderBooks = this.props.books.map(book => (
+            <span>
                 <p>
                     <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                     <Link to={{
                         pathname: `/search/books/${book.volumeInfo.title}`,
                         state: book
                     }} ><h3>{ book.volumeInfo.title }</h3></Link>
-                    
+                
+                    <button onClick={ () => this.handleAddBook({ author: book.volumeInfo.authors.concat(' '), title: book.volumeInfo.title , image: book.volumeInfo.imageLinks.thumbnail, moreInfo: book.volumeInfo.infoLink }) }>Add Book to Wishlist</button>
                 </p> 
-            ));
-            return renderBooks
-        };
+            </span>
+        ));
+
+        return renderBooks;
     };
     
     render () {
-        console.log(this.props)
         return (
             <div className="BookListContainer">
                 <form className='searchForm' onSubmit={this.handleSubmit}>
@@ -54,7 +57,6 @@ class SearchableBookListContainer extends PureComponent {
                     <button type='submit'>Search</button>
                 </form>
 
-                {/* { Button(this.handleButton, "Search") } */}
                 {typeof this.props.books === 'object' && this.props.books.length > 0 && <h2>Books By Search:</h2>}
                 
                 {this.handleLoading()}
@@ -65,11 +67,16 @@ class SearchableBookListContainer extends PureComponent {
 };
 
 function mapDispatchToProps(dispatch) {
-    return { fetchSearchBookList: (query) => dispatch(fetchSearchBookList(query)) }
+    return { 
+        fetchSearchBookList: (query) => dispatch(fetchSearchBookList(query)),
+        addBook: book => dispatch(addBook(book))
+    }
 };
 
 function mapStateToProps(state) {
-    return{ books: state.searchBookList }
+    return { 
+        books: state.searchBookList
+     }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps) (SearchableBookListContainer);
