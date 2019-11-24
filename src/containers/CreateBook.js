@@ -30,8 +30,6 @@ class CreateBook extends PureComponent {
             moreInfo: ''
         })
     }
-
-    renderBooks = () => this.props.books.map((book) => <li id={book.id}>{book.title}</li>)
     
     render () {
         
@@ -59,7 +57,6 @@ class CreateBook extends PureComponent {
                     <input type='submit' value='Add to wishlist'/>
                 </form>
 
-                {this.renderBooks()}
             </div>
         );
     }
@@ -69,10 +66,4 @@ const mapDispatchToProps = dispatch => {
     return { addBook: book => dispatch(addBook(book)) }
 };
 
-const mapStateToProps = state => {
-    return {
-        books: state.wishList
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateBook);
+export default connect(null, mapDispatchToProps)(CreateBook);

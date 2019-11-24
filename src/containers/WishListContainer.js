@@ -9,7 +9,6 @@ class WishListContainer extends PureComponent {
         return this.props.books.map( book => <WishList deleteBook={this.props.deleteBook} key={book.id} book={book} />)
     }
     render () {
-        console.log(this.props.books)
         return (
             <div className="BookListContainer">
                 <h1>My wishlist</h1>
