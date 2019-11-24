@@ -1,57 +1,59 @@
 import React, { PureComponent } from 'react';
 import '../css/BookListContainer.css';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { fetchLatestBookList } from '../actions/latestBookList';
+import { addBook } from '../actions/wishList';
 
 class LatestBookListContainer extends PureComponent {
 
-    state = {
-        books: []
+    handleAddBook = (book) => {
+        this.props.addBook(book);
     };
 
-    componentDidMount() {  
-        fetch("https://www.googleapis.com/books/v1/volumes?q=flowers&orderBy=newest")
-        .then(response => {
-            if ( !response.ok ) { throw response }
-            return response.json()  //we only get here if there is no error
-        })
-        .then(books => {
-            console.log(books.items)
-            if (books.error) {
-                alert("There was an error")
-            } else {
-                this.setState({
-                    books: books.items
-                })
-            }
-        })
-        .catch( err => {
-            err.text().then(errorMessage => {
-                alert(JSON.parse(errorMessage).error.message)
-            })
-        })
-    
+    componentDidMount() {
+        this.props.fetchLatestBookList();
+    };
+
+    handleLoading = () => {
+        const renderBooks = this.props.books.map(book => (
+            <span>
+                <p>
+                    <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                    <Link to={{
+                        pathname: `/new-releases/books/${book.volumeInfo.title}`,
+                        state: book
+                    }} ><h3>{ book.volumeInfo.title }</h3></Link>
+                
+                </p>
+                
+                <button onClick={ () => this.handleAddBook({ author: book.volumeInfo.authors.concat(' '), title: book.volumeInfo.title , image: book.volumeInfo.imageLinks.thumbnail, moreInfo: book.volumeInfo.infoLink }) }>Add Book to Wishlist</button>
+            </span>  
+        ));
+
+        return renderBooks;
     };
 
     render () {
-
-        const renderBooks = this.state.books.map(book => (
-            <p>
-                <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
-                <Link to={{
-                    pathname: `/new-releases/books/${book.volumeInfo.title}`,
-                    state: book
-                }} ><h3>{ book.volumeInfo.title }</h3></Link>
-                
-            </p> 
-        ));
-
         return (
             <div className="BookListContainer">
-                {renderBooks}
+                {this.handleLoading()}
             </div>
         );
     };
-
 };
 
-export default LatestBookListContainer;
+const mapDispatchToProps = dispatch => {
+    return { 
+        fetchLatestBookList: () => dispatch(fetchLatestBookList()),
+        addBook: book => dispatch(addBook(book))
+    }
+};
+
+function mapStateToProps(state) {
+    return { 
+        books: state.latestBookList
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (LatestBookListContainer);

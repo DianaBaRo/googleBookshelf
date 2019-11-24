@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import '../css/Form.css';
 import { connect } from 'react-redux';
-import { addBook } from '../actions/books';
+import { addBook } from '../actions/wishList';
 
 class CreateBook extends PureComponent {
 
@@ -26,12 +26,9 @@ class CreateBook extends PureComponent {
         this.setState({
             title: '',
             author: '',
-            image: '',
             moreInfo: ''
         })
     }
-
-    renderBooks = () => this.props.books.map((book) => <li id={book.id}>{book.title}</li>)
     
     render () {
         
@@ -49,17 +46,12 @@ class CreateBook extends PureComponent {
                         <input type='text' name='author' onChange={ this.handleChange } value={this.state.author} />
                     </p>
                     <p>
-                        <label>Upload an image</label>
-                        <input type='text' name='image' onChange={ this.handleChange } value={this.state.image} />
-                    </p>
-                    <p>
                         <label>More Info</label>
                         <textarea type='text' name='moreInfo' onChange={ this.handleChange } value={this.state.moreInfo} />
                     </p>
                     <input type='submit' value='Add to wishlist'/>
                 </form>
 
-                {this.renderBooks()}
             </div>
         );
     }
@@ -69,10 +61,4 @@ const mapDispatchToProps = dispatch => {
     return { addBook: book => dispatch(addBook(book)) }
 };
 
-const mapStateToProps = state => {
-    return {
-        books: state.books
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateBook);
+export default connect(null, mapDispatchToProps)(CreateBook);

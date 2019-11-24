@@ -1,6 +1,6 @@
 import uuid from 'uuid';
 
-function booksReducer ( state = [], action) {
+function wishListReducer ( state = [], action) {
     switch (action.type) {
         case 'ADD_BOOK':
             const book = {
@@ -21,4 +21,4 @@ function booksReducer ( state = [], action) {
     };
 };
 
-export default booksReducer;
+export default wishListReducer;

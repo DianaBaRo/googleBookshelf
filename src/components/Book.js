@@ -2,8 +2,8 @@ import React from 'react';
 import '../css/Book.css';
 
 const Book = (props) => {
-
-    const { book } = props.location.state;
+    console.log(props)
+;    const book = props.location.state;
 
     if (book) {
 
@@ -15,7 +15,6 @@ const Book = (props) => {
 
         return(
             <div className="BookListContainer">
-                <h1>Book info</h1>
                 <h1>{ bookTitle }</h1>
                 <img src={bookImage} alt={bookTitle} />
                 <p>by { bookAuthor }</p>
