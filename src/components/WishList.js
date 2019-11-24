@@ -4,15 +4,20 @@ const WishList = props => {
     return (
         <div>
             <span>
-                <p>{props.book.title}</p>
-                <p>{props.book.id}</p>
-                <p>{props.book.author}</p>
-                <p>{props.book.image}</p>
-                <p>{props.book.moreInfo}</p>
+                <img
+                    src='/download.jpeg'
+                    alt={ props.book.title }
+                />
+                <p>{ props.book.title }</p> 
+                <p>by { props.book.author }</p>
+                <p>More Info: { props.book.moreInfo } </p>
+                <p> <button onClick={ () => props.deleteBook(props.book.id)}>Click here to delete from list</button></p>
             </span>
-            <button onClick={ () => props.deleteBook(props.book.id)}>X</button>
+            
         </div>
     );
 };
 
 export default WishList;
+
+

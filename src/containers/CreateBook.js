@@ -26,7 +26,6 @@ class CreateBook extends PureComponent {
         this.setState({
             title: '',
             author: '',
-            image: '',
             moreInfo: ''
         })
     }
@@ -45,10 +44,6 @@ class CreateBook extends PureComponent {
                     <p>
                         <label>Author</label>
                         <input type='text' name='author' onChange={ this.handleChange } value={this.state.author} />
-                    </p>
-                    <p>
-                        <label>Upload an image</label>
-                        <input type='text' name='image' onChange={ this.handleChange } value={this.state.image} />
                     </p>
                     <p>
                         <label>More Info</label>
